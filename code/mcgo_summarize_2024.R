@@ -122,8 +122,12 @@ drive_sum <-mcgo %>%
 
 ###Subset ground and helicopter captures from 'drive_sum'
 ground_sum <- subset(drive_sum, CAPTURE_METHOD == "GROUND")
+#remove second column
+ground_sum <- ground_sum[, -2]
 
 helicopter_sum <- subset(drive_sum, CAPTURE_METHOD == "HELICOPTER")
+#remove second column
+helicopter_sum <- helicopter_sum[, -2]
 
 
 ###Export these two tables as .csv
