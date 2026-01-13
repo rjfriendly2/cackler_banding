@@ -88,6 +88,9 @@ mcgo_recaps$BAND_NUMBER <- paste(mcgo_recaps$PREFIX,mcgo_recaps$SUFFIX,sep = "-"
 ###Remove birds that were banded in the same year, this gives us birds that were banded in other previous years
 novel_recaps <- mcgo_recaps[!mcgo_recaps$BAND_NUMBER %in% mcgo$BAND_NUMBER,]
 
+###Export novel recaps to excel
+
+
 ### Look at data summary
 summary(mcgo)
 # 669 new bands
@@ -96,7 +99,7 @@ summary(mcgo)
 
 
 ##### DATA IS NOW CLEAN #####
-
+write.csv(novel_recaps, "output/2025/novel_recaps_2025.csv")
 
 
 ###summary statistics
@@ -109,6 +112,8 @@ table_04 <- data.frame(mcgo %>% count(DRIVE, DATE, CAPTURE_METHOD))
 table_05 <- data.frame(mcgo %>% count(DRIVE, AGE, SEX))
 table_06 <- data.frame(mcgo %>% count(DRIVE, DATE, AGE, SEX, CAPTURE_METHOD))
 table_07 <- data.frame(mcgo %>% count(DRIVE, DATE, AGE, SEX))
+table_08 <- data.frame(mcgo %>% count(DRIVE, DATE, LAT, LONG))
+print(table_08, digits = 15)
 
 
 ### Use table_06 to make summary table of number of birds caught in each drive 
