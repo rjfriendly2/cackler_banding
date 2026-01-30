@@ -116,6 +116,12 @@ table_08 <- data.frame(mcgo %>% count(DRIVE, DATE, LAT, LONG))
 print(table_08, digits = 15)
 
 
+###subset banding data on capture method for summary reasons
+mcgo_ground <- subset(mcgo, CAPTURE_METHOD == "GROUND")
+mcgo_heli   <- subset(mcgo, CAPTURE_METHOD == "HELICOPTER")
+summary(mcgo_ground)
+
+
 ### Use table_06 to make summary table of number of birds caught in each drive 
 drive_sum <-mcgo %>%
   group_by(DRIVE, CAPTURE_METHOD, DATE) %>%
