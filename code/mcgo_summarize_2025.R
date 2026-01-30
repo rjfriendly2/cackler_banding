@@ -124,7 +124,7 @@ summary(mcgo_ground)
 
 ### Use table_06 to make summary table of number of birds caught in each drive 
 drive_sum <-mcgo %>%
-  group_by(DRIVE, CAPTURE_METHOD, DATE) %>%
+  group_by(DRIVE, LAT, LONG, CAPTURE_METHOD, DATE) %>%
   summarise(
     AHY_M = sum(AGE == "AHY" & SEX == "M"),
     AHY_F = sum(AGE == "AHY" & SEX == "F"),
@@ -132,14 +132,30 @@ drive_sum <-mcgo %>%
     L_F = sum(AGE == "L" & SEX == "F")
   )
 
-###Subset ground and helicopter captures from 'drive_sum'
-ground_sum <- subset(drive_sum, CAPTURE_METHOD == "GROUND")
-#remove second column
-ground_sum <- ground_sum[, -2]
 
-helicopter_sum <- subset(drive_sum, CAPTURE_METHOD == "HELICOPTER")
-#remove second column
-helicopter_sum <- helicopter_sum[, -2]
+###Add a totals column
+drive_sum_total <- drive_sum %>%
+  mutate(
+    TOTAL = AHY_M + AHY_F + L_M + L_F
+  )
+
+
+###Subset ground and helicopter captures from 'drive_sum'
+ground_sum <- subset(drive_sum_total, CAPTURE_METHOD == "GROUND")
+#remove fourth column
+ground_sum <- ground_sum[, -4]
+###get totals for each age and sex class
+colSums(ground_sum[, c("AHY_M", "AHY_F", "L_M", "L_F", "TOTAL")], na.rm = TRUE)
+
+
+
+
+helicopter_sum <- subset(drive_sum_total, CAPTURE_METHOD == "HELICOPTER")
+#remove FOURTH column
+helicopter_sum <- helicopter_sum[, -4]
+###get totals for each age and sex class
+colSums(helicopter_sum[, c("AHY_M", "AHY_F", "L_M", "L_F", "TOTAL")], na.rm = TRUE)
+
 
 
 ###Export these two tables as .csv
