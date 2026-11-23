@@ -20,3 +20,5 @@ summary(mcgo_summary)
 ###get sum of last three columns
 three_totals <- colSums(mcgo_summary[, c("YDNWR","USGS","Total")])
 three_totals
+
+#TESTING TO SEE IF THIS RPROJ IS WORKING WITH GIT
